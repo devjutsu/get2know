@@ -18,12 +18,24 @@ export default async function handler(
   // console.log(data);
 
 
+  
+  const ids = ["1255542774432063488", "1278747501642657792"];
+
   const user = await client.users.findUserByUsername('devjutsu');
   // console.log('user:', user.data);
-  
-  const tweet = (await client.tweets.findTweetById('1500526320094171145'));
-  console.log(tweet);
-  // const tmp = twee tweet.data?.text || tweet.data?.source;
-  
-  res.status(200).json({ name: tweet.data?.text || '-'});
+
+  // const tweet = (await client.tweets.findTweetById('1500526320094171145'));
+  // console.log(tweet);
+  // res.status(200).json({ name: tweet.data?.text || '-'});
+
+  try {
+    const tweets = await client.tweets.findTweetsById({ids:ids});
+    // console.log(tweets);
+    const result = tweets.data?.map(t => t);
+    console.log('res: ', result);
+
+  } catch (ex) {
+    console.log(ex);
+  }
+  res.send('ok' as any);
 }
